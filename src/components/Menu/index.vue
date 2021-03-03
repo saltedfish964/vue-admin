@@ -9,8 +9,70 @@ export default {
     defaultActive: {
       type: String,
     },
+    mode: {
+      tyep: String,
+      default: 'vertical',
+    },
+    collapse: {
+      tyep: Boolean,
+      default: false,
+    },
+    backgroundColor: {
+      type: String,
+      default: '#ffffff',
+    },
+    textColor: {
+      type: String,
+      default: '#303133',
+    },
+    activeTextColor: {
+      type: String,
+      default: '#409EFF',
+    },
+    defaultOpeneds: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+    uniqueOpened: {
+      type: Boolean,
+      default: false,
+    },
+    menuTrigger: {
+      type: String,
+      default: 'hover',
+    },
+    router: {
+      type: Boolean,
+      default: false,
+    },
+    collapseTransition: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      name: `menu${Date.now()}`,
+    };
   },
   methods: {
+    open(index) {
+      this.$refs[this.name].open(index);
+    },
+    close(index) {
+      this.$refs[this.name].close(index);
+    },
+    onSelect(index, indexPath) {
+      this.$emit('select', index, indexPath);
+    },
+    onOpen(index, indexPath) {
+      this.$emit('open', index, indexPath);
+    },
+    onClose(index, indexPath) {
+      this.$emit('close', index, indexPath);
+    },
     getElMenuItemProps(obj) {
       const props = {};
       if (obj.index) {
@@ -22,13 +84,44 @@ export default {
       if (obj.disabled) {
         props.disabled = obj.disabled;
       }
+      if (obj.popperClass) {
+        props['popper-class'] = obj.popperClass;
+      }
+      if (obj.showTimeout) {
+        props['show-timeout'] = obj.showTimeout;
+      }
+      if (obj.hideTimeout) {
+        props['hide-timeout'] = obj.hideTimeout;
+      }
+      if (obj.popperAppendToBody) {
+        props['popper-append-to-body'] = obj.popperAppendToBody;
+      }
+      if (obj.icon) {
+        props.icon = obj.icon;
+      }
+      if (obj.name) {
+        props.name = obj.name;
+      }
       return props;
     },
     createElMenuItem(h, opt) {
       const props = this.getElMenuItemProps(opt);
+      let node = [props.name];
+      if (props.icon) {
+        node = [
+          h('i', {
+            attrs: {
+              class: props.icon,
+            },
+          }),
+          h('span', {
+            slot: 'title',
+          }, [props.name]),
+        ];
+      }
       return h('el-menu-item', {
         props,
-      }, [opt.name]);
+      }, [...node]);
     },
     createElSubmenu(h, obj) {
       const props = this.getElMenuItemProps(obj);
@@ -46,12 +139,27 @@ export default {
         return this.createElMenuItem(h, item);
       });
 
+      let node = [props.name];
+
+      if (props.icon) {
+        node = [
+          h('i', {
+            attrs: {
+              class: props.icon,
+            },
+          }),
+          h('span', {
+            slot: 'title',
+          }, [props.name]),
+        ];
+      }
+
       const rootElSubmenu = h('el-submenu', {
         props,
       }, [
         h('template', {
           slot: 'title',
-        }, [obj.name]),
+        }, [...node]),
         ...rootElSubmenuChildren,
       ]);
 
@@ -81,10 +189,27 @@ export default {
   render(createElement) {
     const nodes = this.createChildrenList(createElement, this.data);
     const elMenu = createElement('el-menu', {
+      on: {
+        select: this.onSelect,
+        open: this.onOpen,
+        close: this.onClose,
+      },
       props: {
         'default-active': this.defaultActive,
+        mode: this.mode,
+        collapse: this.collapse,
+        'background-color': this.backgroundColor,
+        'text-color': this.textColor,
+        'active-text-color': this.activeTextColor,
+        'default-openeds': this.defaultOpeneds,
+        'unique-opened': this.uniqueOpened,
+        'menu-trigger': this.menuTrigger,
+        router: this.router,
+        'collapse-transition': this.collapseTransition,
       },
+      ref: this.name,
     }, nodes);
+
     return elMenu;
   },
 };

@@ -6,6 +6,7 @@ import store from './store';
 
 import 'normalize.css';
 import 'element-ui/lib/theme-chalk/index.css';
+import '@/style/index.less';
 
 Vue.config.productionTip = false;
 

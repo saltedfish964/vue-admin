@@ -1,30 +1,36 @@
 <template>
-  <div class="home">
-    <Menu
-      class="el-menu-vertical-demo"
-      :collapse="collapse"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-      :data="menu"
-      @select="onSelect"
-      ref="menu"
-    ></Menu>
-  </div>
+  <section class="app-wrap">
+    <div
+      class="sidebar"
+      :class="{
+        'sidebar-active': collapse
+      }"
+    >
+      <el-scrollbar wrap-class="scrollbar-wrapper">
+        <Menu
+          :data="menu"
+          class="siderbar-menu"
+          :collapse="collapse"
+        ></Menu>
+      </el-scrollbar>
+    </div>
+    <div class="main-container">
+      <button @click="collapse = !collapse">Click</button>
+      <router-view></router-view>
+    </div>
+  </section>
 </template>
 
 <script>
-import Menu from '../components/Menu/index.vue';
+import Menu from '@/components/Menu/index.vue';
 
 export default {
-  name: 'Home',
   components: {
     Menu,
   },
   data() {
     return {
-      activeIndex: '3-1',
-      collapse: true,
+      collapse: false,
       menu: [
         {
           index: '1',
@@ -97,26 +103,36 @@ export default {
       ],
     };
   },
-  methods: {
-    onOpen() {
-      this.collapse = !this.collapse;
-      // this.$refs.menu.open('3-1');
-    },
-    onClose() {
-      this.$refs.menu.close('3-1');
-    },
-    onSelect(index, indexPath) {
-      console.log(index, indexPath);
-    },
-  },
 };
 </script>
 
-<style scoped>
-.el-menu-vertical-demo {
+<style lang="less" scoped>
+.app-wrap {
+  display: flex;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
+.sidebar {
+  transition: all 0.3s;
+  width: 300px;
+  background: #fff;
+  border-right: solid 1px #e6e6e6;
+  .scrollbar-wrapper {
+    height: 100vh;
+  }
+  /deep/.el-scrollbar__wrap {
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  /deep/.el-menu {
+    border-right: 0;
+  }
+}
+.sidebar-active {
+  width: 64px;
+}
+.main-container {
+  flex: 1;
 }
 </style>

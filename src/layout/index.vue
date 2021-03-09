@@ -14,7 +14,10 @@
         ></Menu>
       </el-scrollbar>
     </div>
-    <div class="main-container">
+    <div
+      class="main-container"
+      :style="`width: ${!collapse ? 'calc(100vw - 300px)' : 'calc(100vw - 64px)'}`"
+    >
       <div class="header">
         <div
           class="menu-ctrl"
@@ -30,17 +33,38 @@
           ></el-avatar>
         </div>
       </div>
-      <router-view></router-view>
+      <VTabs
+        v-model="editableTabsValue"
+        type="border-card"
+        :show-content="false"
+      >
+        <VTabPane
+          v-for="(item) in editableTabs"
+          :key="item.name"
+          :label="item.title"
+          :name="item.name"
+          :closable="item.closable"
+        >
+          {{item.content}}
+        </VTabPane>
+      </VTabs>
+      <div>
+        <router-view></router-view>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
 import Menu from '@/components/Menu/index.vue';
+import VTabs from '@/components/VTabs/tabs.vue';
+import VTabPane from '@/components/VTabs/tab-pane.vue';
 
 export default {
   components: {
     Menu,
+    VTabs,
+    VTabPane,
   },
   data() {
     return {
@@ -115,6 +139,55 @@ export default {
           icon: 'el-icon-menu',
         },
       ],
+      editableTabsValue: '2',
+      editableTabs: [
+        {
+          title: 'Tab 1',
+          name: '1',
+          content: 'Tab 1 content',
+          closable: true,
+        },
+        {
+          title: 'Tab 2',
+          name: '2',
+          content: 'Tab 2 content',
+        },
+        {
+          title: 'Tab 3',
+          name: '3',
+          content: 'Tab 3 content',
+        },
+        {
+          title: 'Tab 4',
+          name: '4',
+          content: 'Tab 4 content',
+        },
+        {
+          title: 'Tab 5',
+          name: '5',
+          content: 'Tab 5 content',
+        },
+        {
+          title: 'Tab 5',
+          name: '6',
+          content: 'Tab 5 content',
+        },
+        {
+          title: 'Tab 5',
+          name: '7',
+          content: 'Tab 5 content',
+        },
+        {
+          title: 'Tab 5',
+          name: '8',
+          content: 'Tab 5 content',
+        },
+        {
+          title: 'Tab 5',
+          name: '9',
+          content: 'Tab 5 content',
+        },
+      ],
     };
   },
 };
@@ -148,13 +221,13 @@ export default {
 }
 .main-container {
   position: relative;
+  transition: width 0.3s;
   flex: 1;
   .header {
     display: flex;
     height: 64px;
     background: #fff;
     box-sizing: border-box;
-    border-bottom: solid 1px #e6e6e6;
     align-items: center;
     justify-content: space-between;
     .menu-ctrl {

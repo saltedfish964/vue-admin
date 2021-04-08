@@ -10,6 +10,7 @@
         @on-collapse="onCollapse"
       ></TopHeader>
       <VTabs
+        v-if="editableTabs.length"
         v-model="editableTabsValue"
         type="border-card"
         :show-content="false"
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import VTabs from '@/components/VTabs/tabs.vue';
 import VTabPane from '@/components/VTabs/tab-pane.vue';
 import Sidebar from './sidebar.vue';
@@ -46,55 +48,12 @@ export default {
     return {
       collapse: false,
       editableTabsValue: '2',
-      editableTabs: [
-        {
-          title: 'Tab 1',
-          name: '1',
-          content: 'Tab 1 content',
-          closable: true,
-        },
-        {
-          title: 'Tab 2',
-          name: '2',
-          content: 'Tab 2 content',
-        },
-        {
-          title: 'Tab 3',
-          name: '3',
-          content: 'Tab 3 content',
-        },
-        {
-          title: 'Tab 4',
-          name: '4',
-          content: 'Tab 4 content',
-        },
-        {
-          title: 'Tab 5',
-          name: '5',
-          content: 'Tab 5 content',
-        },
-        {
-          title: 'Tab 5',
-          name: '6',
-          content: 'Tab 5 content',
-        },
-        {
-          title: 'Tab 5',
-          name: '7',
-          content: 'Tab 5 content',
-        },
-        {
-          title: 'Tab 5',
-          name: '8',
-          content: 'Tab 5 content',
-        },
-        {
-          title: 'Tab 5',
-          name: '9',
-          content: 'Tab 5 content',
-        },
-      ],
     };
+  },
+  computed: {
+    ...mapState({
+      editableTabs: (state) => state.tabs.list,
+    }),
   },
   methods: {
     onCollapse(value) {

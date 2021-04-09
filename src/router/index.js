@@ -6,18 +6,6 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    component: Layout,
-    redirect: 'Home',
-    children: [
-      {
-        path: '/home',
-        name: 'Home',
-        component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
-      },
-    ],
-  },
-  {
     path: '/demo/',
     component: Layout,
     children: [
@@ -52,5 +40,20 @@ const routes = [
 const router = new VueRouter({
   routes,
 });
+
+router.addRoutes([
+  {
+    path: '/',
+    component: Layout,
+    redirect: 'home',
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+      },
+    ],
+  },
+]);
 
 export default router;

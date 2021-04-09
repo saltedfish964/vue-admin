@@ -11,6 +11,7 @@
         class="siderbar-menu"
         :collapse="collapse"
         default-active="Home"
+        @select="onMenuSelect"
       ></Menu>
     </el-scrollbar>
   </div>
@@ -31,6 +32,11 @@ export default {
   },
   components: {
     Menu,
+  },
+  methods: {
+    onMenuSelect(index) {
+      console.log(index);
+    },
   },
 };
 </script>

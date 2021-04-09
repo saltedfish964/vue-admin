@@ -1,7 +1,7 @@
 const state = () => ({
   list: [
     {
-      index: '1',
+      index: 'Home',
       route: '/',
       disabled: false,
       name: '首页',

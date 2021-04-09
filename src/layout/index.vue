@@ -1,6 +1,9 @@
 <template>
   <section class="app-wrap">
-    <Sidebar :collapse="collapse"></Sidebar>
+    <Sidebar
+      :collapse="collapse"
+      :menu="menu"
+    ></Sidebar>
     <div
       class="main-container"
       :style="`width: ${!collapse ? 'calc(100vw - 300px)' : 'calc(100vw - 64px)'}`"
@@ -53,6 +56,7 @@ export default {
   computed: {
     ...mapState({
       editableTabs: (state) => state.tabs.list,
+      menu: (state) => state.menu.list,
     }),
   },
   methods: {

@@ -2,38 +2,35 @@
   <div
     class="sidebar"
     :class="{
-        'sidebar-active': collapse
-      }"
+      'sidebar-active': collapse
+    }"
   >
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <Menu
         :data="menu"
         class="siderbar-menu"
         :collapse="collapse"
+        default-active="Home"
       ></Menu>
     </el-scrollbar>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import Menu from '@/components/Menu/index.vue';
 
 export default {
   props: {
     collapse: Boolean,
+    menu: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
   },
   components: {
     Menu,
-  },
-  data() {
-    return {
-    };
-  },
-  computed: {
-    ...mapState({
-      menu: (state) => state.menu.list,
-    }),
   },
 };
 </script>

@@ -14,7 +14,11 @@ const getters = {};
 
 const actions = {};
 
-const mutations = {};
+const mutations = {
+  addMenu(currentState, menu) {
+    currentState.list.push(menu);
+  },
+};
 
 export default {
   namespaced: true,

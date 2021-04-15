@@ -1,122 +1,30 @@
 <template>
-  <div class="home">
-    <Menu
-      class="el-menu-vertical-demo"
-      :collapse="collapse"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-      :data="menu"
-      @select="onSelect"
-      ref="menu"
-    ></Menu>
-  </div>
+  <div class="home">首页<button @click="addNewMenu">添加菜单</button></div>
 </template>
 
 <script>
-import Menu from '../components/Menu/index.vue';
+import { resetRouter } from '@/router/index';
 
 export default {
   name: 'Home',
-  components: {
-    Menu,
-  },
   data() {
     return {
-      activeIndex: '3-1',
-      collapse: true,
-      menu: [
-        {
-          index: '1',
-          route: '/',
-          disabled: false,
-          name: '首页',
-          icon: 'el-icon-location',
-        },
-        {
-          index: '2',
-          route: '/about',
-          disabled: false,
-          name: '关于',
-          icon: 'el-icon-menu',
-        },
-        {
-          index: '3',
-          route: '/list',
-          disabled: false,
-          name: '总列表',
-          popperClass: 'test-class',
-          icon: 'el-icon-menu',
-          children: [
-            [
-              {
-                name: '下拉分组',
-              },
-              {
-                index: '3-1',
-                route: '/list1',
-                disabled: false,
-                name: '列表-1',
-                icon: 'el-icon-menu',
-                children: [
-                  {
-                    index: '3-1-1',
-                    route: '/list3-1-1',
-                    disabled: false,
-                    name: '列表3-1-1',
-                  },
-                  {
-                    index: '3-2-1',
-                    route: '/list3-2-1',
-                    disabled: false,
-                    name: '列表-3-2-1',
-                  },
-                ],
-              },
-            ],
-            [
-              {
-                name: '下拉分组-2',
-              },
-              {
-                index: '3-2',
-                route: '/list2',
-                disabled: false,
-                name: '列表-2',
-              },
-            ],
-          ],
-        },
-        {
-          index: '4',
-          route: '/other',
-          disabled: false,
-          name: '其他',
-          icon: 'el-icon-menu',
-        },
-      ],
     };
   },
   methods: {
-    onOpen() {
-      this.collapse = !this.collapse;
-      // this.$refs.menu.open('3-1');
-    },
-    onClose() {
-      this.$refs.menu.close('3-1');
-    },
-    onSelect(index, indexPath) {
-      console.log(index, indexPath);
+    addNewMenu() {
+      // resetRouter();
+      console.log(resetRouter);
+      resetRouter();
+      this.$router.push({ name: '404' });
+      // this.$store.commit('menu/addMenu', {
+      //   index: 'Other',
+      //   route: '/other',
+      //   disabled: false,
+      //   name: '其他',
+      //   icon: 'el-icon-location',
+      // });
     },
   },
 };
 </script>
-
-<style scoped>
-.el-menu-vertical-demo {
-  height: 100vh;
-}
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-}
-</style>

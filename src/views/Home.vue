@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { resetRouter } from '@/router/index';
 
 export default {
   name: 'Home',
@@ -12,13 +13,17 @@ export default {
   },
   methods: {
     addNewMenu() {
-      this.$store.commit('menu/addMenu', {
-        index: 'Other',
-        route: '/other',
-        disabled: false,
-        name: '其他',
-        icon: 'el-icon-location',
-      });
+      // resetRouter();
+      console.log(resetRouter);
+      resetRouter();
+      this.$router.push({ name: '404' });
+      // this.$store.commit('menu/addMenu', {
+      //   index: 'Other',
+      //   route: '/other',
+      //   disabled: false,
+      //   name: '其他',
+      //   icon: 'el-icon-location',
+      // });
     },
   },
 };

@@ -14,9 +14,10 @@
       ></TopHeader>
       <VTabs
         v-if="editableTabs.length"
-        v-model="editableTabsValue"
+        :value="$store.state.tabs.active"
         type="border-card"
         :show-content="false"
+        @tab-click="onTabClick"
       >
         <VTabPane
           v-for="(item) in editableTabs"
@@ -50,7 +51,6 @@ export default {
   data() {
     return {
       collapse: false,
-      editableTabsValue: '2',
     };
   },
   computed: {
@@ -63,6 +63,27 @@ export default {
     onCollapse(value) {
       this.collapse = value;
     },
+    onTabClick(tab) {
+      const tabItem = this.$store.getters['tabs/getTabsItem'](tab.name);
+      if (tabItem.route.fullPath !== this.$route.fullPath) {
+        this.$router.push({
+          path: tabItem.route.path,
+          query: tabItem.route.query,
+          params: tabItem.route.params,
+        })
+          .then(() => {
+            this.$store.commit('tabs/CHANGE_ACTIVE', tab.name);
+          });
+      }
+    },
+  },
+  created() {
+    this.$store.commit('tabs/ADD_NEW_TAB', {
+      title: this.$route.name,
+      name: this.$route.fullPath,
+      route: this.$route,
+    });
+    this.$store.commit('tabs/CHANGE_ACTIVE', this.$route.fullPath);
   },
 };
 </script>

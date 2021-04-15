@@ -1,59 +1,31 @@
 const state = () => ({
-  list: [
-    {
-      title: 'Tab 1',
-      name: '1',
-      content: 'Tab 1 content',
-      closable: true,
-    },
-    {
-      title: 'Tab 2',
-      name: '2',
-      content: 'Tab 2 content',
-    },
-    {
-      title: 'Tab 3',
-      name: '3',
-      content: 'Tab 3 content',
-    },
-    {
-      title: 'Tab 4',
-      name: '4',
-      content: 'Tab 4 content',
-    },
-    {
-      title: 'Tab 5',
-      name: '5',
-      content: 'Tab 5 content',
-    },
-    {
-      title: 'Tab 5',
-      name: '6',
-      content: 'Tab 5 content',
-    },
-    {
-      title: 'Tab 5',
-      name: '7',
-      content: 'Tab 5 content',
-    },
-    {
-      title: 'Tab 5',
-      name: '8',
-      content: 'Tab 5 content',
-    },
-    {
-      title: 'Tab 5',
-      name: '9',
-      content: 'Tab 5 content',
-    },
-  ],
+  active: '',
+  list: [],
 });
 
-const getters = {};
+const getters = {
+  getTabsItem(s) {
+    const currentState = s;
+    return (name) => currentState.list.find((item) => item.name === name);
+  },
+};
 
-const actions = {};
+const actions = {
+};
 
-const mutations = {};
+const mutations = {
+  CHANGE_ACTIVE: (s, value) => {
+    const currentState = s;
+    if (currentState.active === value) return;
+    currentState.active = value;
+  },
+  ADD_NEW_TAB: (s, tab) => {
+    const currentState = s;
+    const index = currentState.list.findIndex((item) => item.name === tab.name);
+    if (index !== -1) return;
+    currentState.list.push(tab);
+  },
+};
 
 export default {
   namespaced: true,

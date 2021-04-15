@@ -1,10 +1,18 @@
 const state = () => ({
+  active: '',
   list: [
     {
       index: 'Home',
       route: '/',
       disabled: false,
       name: '首页',
+      icon: 'el-icon-location',
+    },
+    {
+      index: 'DemoOne',
+      route: '/',
+      disabled: false,
+      name: 'Demo',
       icon: 'el-icon-location',
     },
   ],

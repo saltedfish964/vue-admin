@@ -10,7 +10,7 @@
         :data="menu"
         class="siderbar-menu"
         :collapse="collapse"
-        default-active="Home"
+        :default-active="defaultActive"
         @select="onMenuSelect"
       ></Menu>
     </el-scrollbar>
@@ -30,13 +30,31 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      defaultActive: 'Home',
+    };
+  },
   components: {
     Menu,
   },
   methods: {
-    onMenuSelect(index) {
-      console.log(index);
+    onMenuSelect(routerName) {
+      const { name } = this.$route;
+      if (name === routerName) return;
+      this.$router.push({ name: routerName })
+        .then(() => {
+          this.$store.commit('tabs/ADD_NEW_TAB', {
+            title: this.$route.name,
+            name: this.$route.fullPath,
+            route: this.$route,
+          });
+          this.$store.commit('tabs/CHANGE_ACTIVE', this.$route.fullPath);
+        });
     },
+  },
+  created() {
+    this.defaultActive = this.$route.name;
   },
 };
 </script>

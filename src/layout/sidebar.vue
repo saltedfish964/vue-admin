@@ -10,7 +10,7 @@
         :data="menu"
         class="siderbar-menu"
         :collapse="collapse"
-        :default-active="defaultActive"
+        :default-active="$store.state.menu.active"
         @select="onMenuSelect"
       ></Menu>
     </el-scrollbar>
@@ -30,11 +30,6 @@ export default {
       },
     },
   },
-  data() {
-    return {
-      defaultActive: 'Home',
-    };
-  },
   components: {
     Menu,
   },
@@ -50,11 +45,9 @@ export default {
             route: this.$route,
           });
           this.$store.commit('tabs/CHANGE_ACTIVE', this.$route.fullPath);
+          this.$store.commit('menu/setActive', routerName);
         });
     },
-  },
-  created() {
-    this.defaultActive = this.$route.name;
   },
 };
 </script>

@@ -1,16 +1,14 @@
 const state = () => ({
-  active: '',
+  active: 'Home',
   list: [
     {
       index: 'Home',
-      route: '/',
       disabled: false,
       name: '首页',
       icon: 'el-icon-location',
     },
     {
       index: 'DemoOne',
-      route: '/',
       disabled: false,
       name: 'Demo',
       icon: 'el-icon-location',
@@ -23,8 +21,13 @@ const getters = {};
 const actions = {};
 
 const mutations = {
-  addMenu(currentState, menu) {
+  addMenu(s, menu) {
+    const currentState = s;
     currentState.list.push(menu);
+  },
+  setActive(s, value) {
+    const currentState = s;
+    currentState.active = value;
   },
 };
 

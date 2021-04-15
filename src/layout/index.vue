@@ -18,6 +18,7 @@
         type="border-card"
         :show-content="false"
         @tab-click="onTabClick"
+        @tab-remove="removeTab"
       >
         <VTabPane
           v-for="(item) in editableTabs"
@@ -73,8 +74,15 @@ export default {
         })
           .then(() => {
             this.$store.commit('tabs/CHANGE_ACTIVE', tab.name);
+            this.$store.commit('menu/setActive', tabItem.route.name);
           });
       }
+    },
+    removeTab(targetName) {
+      this.$store.commit('tabs/REMOVE_TAB_ITEM', targetName);
+      const { list, active } = this.$store.state.tabs;
+      const menuActive = list.find((tab) => tab.name === active);
+      this.$store.commit('menu/setActive', menuActive.title);
     },
   },
   created() {
@@ -84,6 +92,7 @@ export default {
       route: this.$route,
     });
     this.$store.commit('tabs/CHANGE_ACTIVE', this.$route.fullPath);
+    this.$store.commit('menu/setActive', this.$route.name);
   },
 };
 </script>

@@ -8,29 +8,36 @@
       class="main-container"
       :style="`width: ${!collapse ? 'calc(100vw - 300px)' : 'calc(100vw - 64px)'}`"
     >
-      <TopHeader
-        :collapse="collapse"
-        @on-collapse="onCollapse"
-      ></TopHeader>
-      <VTabs
-        v-if="editableTabs.length"
-        :value="$store.state.tabs.active"
-        type="border-card"
-        :show-content="false"
-        @tab-click="onTabClick"
-        @tab-remove="removeTab"
-      >
-        <VTabPane
-          v-for="(item) in editableTabs"
-          :key="item.name"
-          :label="item.title"
-          :name="item.name"
-          :closable="item.closable"
-        >
-          {{item.content}}
-        </VTabPane>
-      </VTabs>
-      <router-view></router-view>
+      <div class="scrollbar-wrapper">
+        <el-scrollbar>
+          <div class="header-box">
+            <TopHeader
+              :collapse="collapse"
+              @on-collapse="onCollapse"
+            ></TopHeader>
+            <VTabs
+              v-if="editableTabs.length"
+              :value="$store.state.tabs.active"
+              type="border-card"
+              :show-content="false"
+              @tab-click="onTabClick"
+            >
+              <VTabPane
+                v-for="(item) in editableTabs"
+                :key="item.name"
+                :label="item.title"
+                :name="item.name"
+                :closable="item.closable"
+              >
+                {{item.content}}
+              </VTabPane>
+            </VTabs>
+          </div>
+          <div class="content-box">
+            <router-view></router-view>
+          </div>
+        </el-scrollbar>
+      </div>
     </div>
   </section>
 </template>
@@ -108,5 +115,20 @@ export default {
   position: relative;
   transition: width 0.3s;
   flex: 1;
+}
+.scrollbar-wrapper {
+  height: 100vh;
+  /deep/.el-scrollbar__wrap {
+    overflow-x: auto;
+  }
+}
+.header-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.content-box {
+  padding-top: 105px;
 }
 </style>

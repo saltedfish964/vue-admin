@@ -29,7 +29,11 @@
           {{item.content}}
         </VTabPane>
       </VTabs>
-      <router-view></router-view>
+      <div class="scrollbar-wrapper">
+        <el-scrollbar>
+          <router-view></router-view>
+        </el-scrollbar>
+      </div>
     </div>
   </section>
 </template>
@@ -99,5 +103,11 @@ export default {
   position: relative;
   transition: width 0.3s;
   flex: 1;
+}
+.scrollbar-wrapper {
+  height: calc(100vh - 105px);
+  /deep/.el-scrollbar__wrap {
+    overflow-x: auto;
+  }
 }
 </style>

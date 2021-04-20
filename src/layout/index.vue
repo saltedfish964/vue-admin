@@ -21,6 +21,7 @@
               type="border-card"
               :show-content="false"
               @tab-click="onTabClick"
+              @tab-remove="removeTab"
             >
               <VTabPane
                 v-for="(item) in editableTabs"

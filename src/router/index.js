@@ -26,6 +26,11 @@ router.addRoutes([
         name: 'Home',
         component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
       },
+      {
+        path: '/relationmap',
+        name: 'RelationMap',
+        component: () => import(/* webpackChunkName: "relationmap" */ '../views/RelationMap/index.vue'),
+      },
     ],
   },
   {

@@ -8,6 +8,12 @@ const state = () => ({
       icon: 'el-icon-location',
     },
     {
+      index: 'RelationMap',
+      disabled: false,
+      name: '关系图',
+      icon: 'el-icon-location',
+    },
+    {
       index: 'DemoOne',
       disabled: false,
       name: 'Demo',

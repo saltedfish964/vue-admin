@@ -10,7 +10,47 @@
 <script>
 import ResizeObserver from 'resize-observer-polyfill';
 import debounce from 'lodash.debounce';
-import { Graph } from '@antv/x6';
+import { Graph, Dom } from '@antv/x6';
+
+Graph.registerNode('custom-rect', {
+  inherit: 'rect', // 继承自 Shape.Rect
+  width: 300, // 默认宽度
+  height: 40, // 默认高度
+  markup: [
+    {
+      tagName: 'rect',
+      attrs: {
+        class: 'card',
+      },
+    },
+    {
+      tagName: 'text',
+      attrs: {
+        class: 'rank',
+      },
+    },
+  ],
+  attrs: {
+    '.card': {
+      rx: 10,
+      ry: 10,
+      refWidth: '100%',
+      refHeight: '100%',
+      fill: '#FFF',
+      stroke: '#000',
+      strokeWidth: 0,
+      pointerEvents: 'visiblePainted',
+    },
+    '.rank': {
+      refX: 0.95,
+      refY: 0.5,
+      fontFamily: 'Courier New',
+      fontSize: 13,
+      textAnchor: 'end',
+      textVerticalAnchor: 'middle',
+    },
+  },
+});
 
 export default {
   data() {
@@ -76,6 +116,16 @@ export default {
     });
     this.graph.fromJSON(this.data);
     this.graph.centerContent();
+
+    this.graph.addNode({
+      shape: 'custom-rect',
+      attrs: {
+        '.rank': {
+          fill: 'red',
+          text: Dom.breakText('辣辣辣', { width: 160, height: 45 }),
+        },
+      },
+    });
 
     this.onResize(mapBox);
   },

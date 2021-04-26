@@ -80,7 +80,7 @@ export default {
         })
           .then(() => {
             this.$store.commit('tabs/CHANGE_ACTIVE', tab.name);
-            this.$store.commit('menu/setActive', tabItem.route.name);
+            this.$store.commit('menu/setActive', tabItem.route.meta.menuActive || tabItem.route.name);
           });
       }
     },
@@ -88,17 +88,17 @@ export default {
       this.$store.commit('tabs/REMOVE_TAB_ITEM', targetName);
       const { list, active } = this.$store.state.tabs;
       const menuActive = list.find((tab) => tab.name === active);
-      this.$store.commit('menu/setActive', menuActive.title);
+      this.$store.commit('menu/setActive', menuActive.route.meta.menuActive || menuActive.route.name);
     },
   },
   created() {
     this.$store.commit('tabs/ADD_NEW_TAB', {
-      title: this.$route.name,
+      title: this.$route.meta.tagName || this.$route.name,
       name: this.$route.fullPath,
       route: this.$route,
     });
     this.$store.commit('tabs/CHANGE_ACTIVE', this.$route.fullPath);
-    this.$store.commit('menu/setActive', this.$route.name);
+    this.$store.commit('menu/setActive', this.$route.meta.menuActive || this.$route.name);
   },
 };
 </script>

@@ -40,7 +40,7 @@ export default {
       this.$router.push({ name: routerName })
         .then(() => {
           this.$store.commit('tabs/ADD_NEW_TAB', {
-            title: this.$route.name,
+            title: this.$route.meta.tagName || this.$route.name,
             name: this.$route.fullPath,
             route: this.$route,
           });

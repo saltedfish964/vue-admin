@@ -25,11 +25,19 @@ router.addRoutes([
         path: '/home',
         name: 'Home',
         component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+        meta: {
+          menuActive: 'Home',
+          tagName: '首页',
+        },
       },
       {
         path: '/relationmap',
         name: 'RelationMap',
         component: () => import(/* webpackChunkName: "relationmap" */ '../views/RelationMap/index.vue'),
+        meta: {
+          menuActive: 'RelationMap',
+          tagName: '关系图',
+        },
       },
     ],
   },

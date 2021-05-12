@@ -14,6 +14,12 @@ const state = () => ({
       icon: 'el-icon-location',
     },
     {
+      index: 'Task',
+      disabled: false,
+      name: '任务',
+      icon: 'el-icon-location',
+    },
+    {
       index: 'DemoOne',
       disabled: false,
       name: 'Demo',

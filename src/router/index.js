@@ -39,6 +39,15 @@ router.addRoutes([
           tagName: '关系图',
         },
       },
+      {
+        path: '/task',
+        name: 'Task',
+        component: () => import(/* webpackChunkName: "task" */ '../views/Task/index.vue'),
+        meta: {
+          menuActive: 'Task',
+          tagName: '任务',
+        },
+      },
     ],
   },
   {
